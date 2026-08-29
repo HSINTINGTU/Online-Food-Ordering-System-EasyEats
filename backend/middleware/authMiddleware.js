@@ -21,4 +21,12 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect };
+const managerOnly = (req, res, next) => {
+    if (req.user && req.user.role === 'restaurant manager') {
+        next();
+    } else {
+        res.status(403).json({ message: 'Not authorized as a restaurant manager' });
+    }
+};
+
+module.exports = { protect, managerOnly };
