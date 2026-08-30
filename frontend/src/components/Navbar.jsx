@@ -16,8 +16,14 @@ const Navbar = () => {
       <div>
         {user ? (
           <>
-            {user.role === 'restaurant manager' && (
+            {user.role === 'restaurant manager' ? (
               <Link to="/menu" className="mr-4">Menu Management</Link>
+            ) : (
+              <>
+                <Link to="/customer-menu" className="mr-4">View Menu</Link>
+                <Link to="/cart" className="mr-4">Cart</Link>
+                <Link to="/orders" className="mr-4">My Orders</Link>
+              </>
             )}
 
             <Link to="/profile" className="mr-4">Profile</Link>
