@@ -14,12 +14,13 @@ const getOrders = async (req, res) => {
 };
 
 const addOrder = async (req, res) => {
-    const { name, email, items, totalPrice } = req.body;
+    const { name, email, address, items, totalPrice } = req.body;
     try {
         const order = await Order.create({ 
             userId: req.user.id, 
             name: name || req.user.name, 
             email: email || req.user.email, 
+            address: address || req.user.address, 
             items, 
             totalPrice 
         });
@@ -36,6 +37,7 @@ const updateOrder = async (req, res) => {
 
         order.name = req.body.name || order.name;
         order.email = req.body.email || order.email;
+        order.address = req.body.address || order.address;
 
         await order.save();
 

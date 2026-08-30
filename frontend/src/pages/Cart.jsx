@@ -19,7 +19,8 @@ const Cart = () => {
       uniqueRestaurants.forEach(id => {
         initialContact[id] = {
           name: user.name || '',
-          email: user.email || ''
+          email: user.email || '',
+          address: user.address || ''
         };
       });
       setContactInfo(initialContact);
@@ -51,10 +52,10 @@ const Cart = () => {
   };
 
   const handleCheckout = async (restaurantId, restaurantName, items, totalPrice) => {
-    const info = contactInfo[restaurantId] || { name: user?.name, email: user?.email };
+    const info = contactInfo[restaurantId] || { name: user?.name, email: user?.email, address: user?.address };
     
-    if (!info.name || !info.email) {
-      alert('Please fill in your name and email.');
+    if (!info.name || !info.email || !info.address) {
+      alert('Please fill in your name, email, and delivery address.');
       return;
     }
 
@@ -67,6 +68,7 @@ const Cart = () => {
       await axiosInstance.post('/api/orders', {
         name: info.name,
         email: info.email,
+        address: info.address,
         items: orderItems,
         totalPrice
       }, {
@@ -108,7 +110,7 @@ const Cart = () => {
           {Object.keys(groupedCart).map((restaurantId) => {
             const group = groupedCart[restaurantId];
             const totalPrice = group.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            const info = contactInfo[restaurantId] || { name: '', email: '' };
+            const info = contactInfo[restaurantId] || { name: '', email: '', address: '' };
 
             return (
               <div key={restaurantId} className="border p-6 rounded-lg shadow bg-white">
@@ -147,7 +149,7 @@ const Cart = () => {
                 </div>
 
                 <div className="border-t pt-4 space-y-4 bg-gray-50 p-4 rounded">
-                  <h3 className="font-semibold">Contact Information for {group.restaurantName}</h3>
+                  <h3 className="font-semibold">Contact & Delivery Information for {group.restaurantName}</h3>
                   <div>
                     <label className="block mb-1 text-sm">Name</label>
                     <input
@@ -165,6 +167,17 @@ const Cart = () => {
                       value={info.email}
                       onChange={(e) => handleContactChange(restaurantId, 'email', e.target.value)}
                       required
+                      className="w-full border p-2 rounded bg-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-1 text-sm">Delivery Address</label>
+                    <input
+                      type="text"
+                      value={info.address}
+                      onChange={(e) => handleContactChange(restaurantId, 'address', e.target.value)}
+                      required
+                      placeholder="Enter delivery address"
                       className="w-full border p-2 rounded bg-white"
                     />
                   </div>

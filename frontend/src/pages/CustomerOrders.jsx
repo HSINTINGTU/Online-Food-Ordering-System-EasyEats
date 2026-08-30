@@ -8,6 +8,7 @@ const CustomerOrders = () => {
   const [editingOrder, setEditingOrder] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
 
   const fetchOrders = async () => {
     try {
@@ -40,6 +41,7 @@ const CustomerOrders = () => {
     setEditingOrder(order._id);
     setName(order.name);
     setEmail(order.email);
+    setAddress(order.address);
   };
 
   const handleUpdate = async (id) => {
@@ -52,7 +54,8 @@ const CustomerOrders = () => {
     try {
       const response = await axiosInstance.put(`/api/orders/${id}`, {
         name,
-        email
+        email,
+        address
       }, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
@@ -108,10 +111,20 @@ const CustomerOrders = () => {
                           className="border p-1 rounded w-full"
                         />
                       </div>
+                      <div>
+                        <label className="block text-sm text-gray-600 mb-1">Delivery Address:</label>
+                        <input
+                          type="text"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                          className="border p-1 rounded w-full"
+                        />
+                      </div>
                     </div>
                   ) : (
-                    <div className="pt-1">
+                    <div className="pt-1 space-y-1">
                       <p className="font-semibold">{order.name} ({order.email})</p>
+                      <p className="text-sm text-gray-600">📍 Delivery Address: {order.address || 'N/A'}</p>
                       <p className="text-gray-600">Total: ${order.totalPrice} | Status: {order.status}</p>
                     </div>
                   )}
