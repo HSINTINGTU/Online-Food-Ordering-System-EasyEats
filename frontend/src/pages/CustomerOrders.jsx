@@ -64,7 +64,7 @@ const CustomerOrders = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-2xl">
+    <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">My Orders</h1>
       {orders.length === 0 ? (
         <p>No orders found.</p>

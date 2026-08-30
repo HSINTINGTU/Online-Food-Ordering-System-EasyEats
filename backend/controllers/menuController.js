@@ -1,6 +1,18 @@
+
 const Menu = require('../models/Menu');
 
+// get all menus for customer
 const getMenus = async (req, res) => {
+    try {
+        const menus = await Menu.find({}).populate('userId', 'name');
+        res.json(menus);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// get only the logged-in user's menu for restaurant manager
+const getMyMenus = async (req, res) => {
     try {
         const menus = await Menu.find({ userId: req.user.id });
         res.json(menus);
@@ -53,4 +65,4 @@ const deleteMenu = async (req, res) => {
     }
 };
 
-module.exports = { getMenus, addMenu, updateMenu, deleteMenu };
+module.exports = { getMenus, getMyMenus, addMenu, updateMenu, deleteMenu };
