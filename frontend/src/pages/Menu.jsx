@@ -12,9 +12,17 @@ const Menu = () => {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        const response = await axiosInstance.get('/api/menus', {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        let endpoint = '/api/menus';
+        let config = {};
+
+        if (user && user.role === 'restaurant manager') {
+          endpoint = '/api/menus/my-menus';
+          config = {
+            headers: { Authorization: `Bearer ${user.token}` },
+          };
+        }
+
+        const response = await axiosInstance.get(endpoint, config);
         setMenus(response.data);
       } catch (error) {
         alert('Failed to fetch menus.');
