@@ -36,18 +36,17 @@ To run this project locally for development and testing, follow these steps:
 1. Clone the Repository
 `git clone https://github.com/HSINTINGTU/Online-Food-Ordering-System-EasyEats.git`
 `cd Online-Food-Ordering-System-EasyEats`
-
 2. Create a .env file in the backend folder and add the following configurations:
 `MONGO_URI=mongodb+srv:<YOUR MONGODB CONNECTION STRING>`
 `JWT_SECRET=2J8zqkP7VN6bxzg+Wy7DXCsd3Yx8mF3Bl0kch6HYtFs=`
 `PORT=5001`
-
 3. Install the following command in root folder for backend and frontend dependencies:
 `npm run install-all`
-
 4. To start both the frontend and backend concurrently:
 `npm start` OR `npm run dev`
 
+
+**Deployment URL:** http://32.236.155.253:3000
 
 
 ---
